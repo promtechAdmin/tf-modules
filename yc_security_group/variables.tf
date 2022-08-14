@@ -9,11 +9,7 @@ variable "network_id" {
 
 variable "allow_ports" {
   type    = map
-  default = {
-    "prod"= []
-    "test"= []
-    "dev"=["22"]
-  }
+  default = {}
 }
 
 variable "labels" {
