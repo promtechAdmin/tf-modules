@@ -9,9 +9,9 @@ terraform {
 
   }
 }
-resource "yandex_vpc_security_group" "vpn_security_group" {
-  name = "${var.env} Open VPN Security Group"
-  description = ""
+resource "yandex_vpc_security_group" "security_group" {
+  name = "${var.env} ${var.name}"
+  description = var.description
   network_id=var.network_id
 
   labels = var.labels
@@ -38,8 +38,6 @@ resource "yandex_vpc_security_group" "vpn_security_group" {
       to_port  = ingress.value
     }
   }
-
-
 
   egress {
     protocol       = "ANY"

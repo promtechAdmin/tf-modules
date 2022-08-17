@@ -3,6 +3,13 @@ variable "env" {
   type    = string
   default     = "prod"
 }
+variable "name" {
+  type    = string
+}
+variable "description" {
+  type    = string
+  default =""
+}
 variable "network_id" {
   type    = string
 }
