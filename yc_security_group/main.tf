@@ -16,25 +16,29 @@ resource "yandex_vpc_security_group" "vpn_security_group" {
 
   labels = var.labels
 
-#  dynamic "ingress" {
-#    for_each = var.allow_ports
-#    content {
-#      protocol    = ingress.key
-#      description    = "${ingress.key} ${ingress.value} allow"
-#      v4_cidr_blocks      = ["0.0.0.0/0"]
-#      from_port  = ingress.value
-#      to_port  = ingress.value
-#    }
-#  }
-
-    for_each = var.allow_ports
-  ingress {
-      protocol    = each.key
-      description    = "${each.key} ${each.value} allow"
+  //tcp
+  dynamic "ingress" {
+    for_each = var.allow_tcp_ports
+    content {
+      protocol    = "tcp"
+      description    = "${ingress.key} ${ingress.value} allow"
       v4_cidr_blocks      = ["0.0.0.0/0"]
-      from_port  = each.value
-      to_port  = each.value
+      from_port  = ingress.value
+      to_port  = ingress.value
     }
+  }
+  //tcp
+  dynamic "ingress" {
+    for_each = var.allow_udp_ports
+    content {
+      protocol    = "udp"
+      description    = "${ingress.key} ${ingress.value} allow"
+      v4_cidr_blocks      = ["0.0.0.0/0"]
+      from_port  = ingress.value
+      to_port  = ingress.value
+    }
+  }
+
 
 
   egress {

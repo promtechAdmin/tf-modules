@@ -7,9 +7,13 @@ variable "network_id" {
   type    = string
 }
 
-variable "allow_ports" {
-  type    = map
-  default = {}
+variable "allow_tcp_ports" {
+  type    = list(string)
+  default = []
+}
+variable "allow_udp_ports" {
+  type    = list(string)
+  default = []
 }
 
 variable "labels" {
