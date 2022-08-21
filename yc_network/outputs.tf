@@ -17,15 +17,15 @@ output "external_ips" {
 }
 output "public_subnets" {
   value = { for v in yandex_vpc_subnet.public_subnets : v.zone => tomap({
-    "id", v.id,
-    "name", v.name,
-    "zone", v.zone
+    id=v.id,
+    name=v.name,
+    zone=v.zone
   }) }
 }
 output "private_subnets" {
   value = { for v in yandex_vpc_subnet.private_subnets : v.zone => tomap({
-    "id", v.id,
-    "name", v.name,
-    "zone", v.zone
+    id=v.id,
+    name=v.name,
+    zone=v.zone
   }) }
 }
