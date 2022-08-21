@@ -16,14 +16,14 @@ data "yandex_compute_image" "ubuntu-20-04" {
 }
 
 data "template_file" "cloud_init" {
-  template = file("cloud-init.tmpl.yaml")
+  template = file("${path.module}/cloud-init.tmpl.yaml")
   vars     = {
     user    = var.user_login
     ssh_key = file(var.public_key_path)
   }
 }
 resource "yandex_compute_instance" "server" {
-  count =instance_count
+  count =var.instance_count
   name        = "${var.env}-${var.instance_name}-${count.index+1}"
   platform_id = lookup(var.instance_type,var.env)
   zone        = var.zone
