@@ -31,7 +31,7 @@ locals{
 }
 
 resource "yandex_vpc_network" "main" {
-  Name = "${var.env}-vpc-${local.project}"
+  name = "${var.env}-vpc-${local.project}"
   folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels
 }
@@ -39,7 +39,7 @@ resource "yandex_vpc_network" "main" {
 #-------------Public Subnets and Routing----------------------------------------
 resource "yandex_vpc_subnet" "public_subnets" {
   count                   = length(var.public_subnet_cidrs)
-  Name = "${var.env}-public-${count.index + 1}"
+  name = "${var.env}-public-${count.index + 1}"
   network_id                  = yandex_vpc_network.main.id
   v4_cidr_blocks              = element(var.public_subnet_cidrs, count.index)
   folder_id = yandex_resourcemanager_folder.folder.id
@@ -63,7 +63,7 @@ resource "yandex_vpc_address" "ext_ip" {
 
 resource "yandex_vpc_subnet" "private_subnets" {
   count                   = length(var.private_subnet_cidrs)
-  Name = "${var.env}-private-${count.index + 1}"
+  name = "${var.env}-private-${count.index + 1}"
   network_id                  = yandex_vpc_network.main.id
   v4_cidr_blocks              = element(var.private_subnet_cidrs, count.index)
   folder_id = yandex_resourcemanager_folder.folder.id
@@ -75,7 +75,7 @@ resource "yandex_vpc_subnet" "private_subnets" {
 resource "yandex_vpc_route_table" "private_subnets_rt" {
   count  = length(var.private_subnet_cidrs)
   network_id  = yandex_vpc_network.main.id
-  Name = "${var.env}-route-private-subnets"
+  name = "${var.env}-route-private-subnets"
   folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels
   static_route {
