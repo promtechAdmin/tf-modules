@@ -3,9 +3,6 @@ variable "env" {
   type    = string
   default     = "prod"
 }
-variable "network_id" {
-  type    = string
-}
 variable "subnet_id" {
   type    = string
 }
@@ -13,9 +10,7 @@ variable "security_group_ids" {
   type    = list(string)
   default =[]
 }
-variable "folder_id" {
-  type    = string
-}
+
 variable "zone" {
   type    = string
 }
@@ -78,6 +73,7 @@ variable "instance_name" {
 variable "hostname" {
   description = "Host name for the instance. This field is used to generate the instance fqdn value"
   type        = string
+  default =""
 }
 
 variable "cores" {
