@@ -23,16 +23,16 @@ terraform {
 
 #==============================================================
 
-resource "yandex_resourcemanager_folder" "folder" {
-  name = var.folder_name
-}
+#resource "yandex_resourcemanager_folder" "folder" {
+#  name = var.folder_name
+#}
 locals{
   project=var.labels.project
 }
 
 resource "yandex_vpc_network" "main" {
   name = "${var.env}-vpc-${local.project}"
-  folder_id = yandex_resourcemanager_folder.folder.id
+//  folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels
 }
 
@@ -42,9 +42,12 @@ resource "yandex_vpc_subnet" "public_subnets" {
   name = "${var.env}-public-${count.index + 1}"
   network_id                  = yandex_vpc_network.main.id
   v4_cidr_blocks              = [element(var.public_subnet_cidrs, count.index)]
-  folder_id = yandex_resourcemanager_folder.folder.id
+//  folder_id = yandex_resourcemanager_folder.folder.id
   zone       = var.zone
   labels=var.labels
+  depends_on = [
+    yandex_vpc_network.main
+  ]
 }
 
 #-----Static Public IPs--------------------------
@@ -52,7 +55,7 @@ resource "yandex_vpc_subnet" "public_subnets" {
 resource "yandex_vpc_address" "ext_ip" {
   count = var.count_static_ips
   name = "${var.env}-extip-${local.project}-${count.index + 1}"
-  folder_id = yandex_resourcemanager_folder.folder.id
+//  folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels
   external_ipv4_address {
     zone_id       = var.zone
@@ -66,17 +69,20 @@ resource "yandex_vpc_subnet" "private_subnets" {
   name = "${var.env}-private-${count.index + 1}"
   network_id                  = yandex_vpc_network.main.id
   v4_cidr_blocks              = [element(var.private_subnet_cidrs, count.index)]
-  folder_id = yandex_resourcemanager_folder.folder.id
+//  folder_id = yandex_resourcemanager_folder.folder.id
   zone       = var.zone
   labels=var.labels
   route_table_id=yandex_vpc_route_table.private_subnets_rt[count.index].id
+  depends_on = [
+    yandex_vpc_network.main
+  ]
 }
 
 resource "yandex_vpc_route_table" "private_subnets_rt" {
   count  = length(var.private_subnet_cidrs)
   network_id  = yandex_vpc_network.main.id
   name = "${var.env}-route-private-subnets"
-  folder_id = yandex_resourcemanager_folder.folder.id
+//  folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels
   static_route {
     destination_prefix  = "0.0.0.0/0"
