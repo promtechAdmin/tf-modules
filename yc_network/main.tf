@@ -32,6 +32,7 @@ locals{
 
 resource "yandex_vpc_network" "main" {
   name = "${var.env}-vpc-${local.project}"
+  description = var.description
 //  folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels
 }

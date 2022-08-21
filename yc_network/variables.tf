@@ -10,6 +10,10 @@ variable "zone" {
   type =string
   default = "ru-central1-a"
 }
+variable "description" {
+  type =string
+  default = ""
+}
 
 variable "env" {
   description = "Environment"
