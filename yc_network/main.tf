@@ -24,7 +24,7 @@ terraform {
 #==============================================================
 
 resource "yandex_resourcemanager_folder" "folder" {
-  cloud_id = var.folder_name
+  name = var.folder_name
 }
 locals{
   project=var.labels.project
