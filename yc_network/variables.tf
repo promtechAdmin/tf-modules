@@ -4,6 +4,7 @@ variable "count_static_ips"{
 }
 variable "folder_name"{
   type =string
+  default=""
 }
 
 variable "zone" {
