@@ -41,7 +41,7 @@ resource "yandex_vpc_subnet" "public_subnets" {
   count                   = length(var.public_subnet_cidrs)
   name = "${var.env}-public-${count.index + 1}"
   network_id                  = yandex_vpc_network.main.id
-  v4_cidr_blocks              = element(var.public_subnet_cidrs, count.index)
+  v4_cidr_blocks              = [element(var.public_subnet_cidrs, count.index)]
   folder_id = yandex_resourcemanager_folder.folder.id
   zone       = var.zone
   labels=var.labels
@@ -65,7 +65,7 @@ resource "yandex_vpc_subnet" "private_subnets" {
   count                   = length(var.private_subnet_cidrs)
   name = "${var.env}-private-${count.index + 1}"
   network_id                  = yandex_vpc_network.main.id
-  v4_cidr_blocks              = element(var.private_subnet_cidrs, count.index)
+  v4_cidr_blocks              = [element(var.private_subnet_cidrs, count.index)]
   folder_id = yandex_resourcemanager_folder.folder.id
   zone       = var.zone
   labels=var.labels
