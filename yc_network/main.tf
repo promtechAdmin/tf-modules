@@ -51,7 +51,7 @@ resource "yandex_vpc_subnet" "public_subnets" {
 #-----Static Public IPs--------------------------
 
 resource "yandex_vpc_address" "ext_ip" {
-  count = var.number_static_ips
+  count = var.count_static_ips
   name = "${var.env}-extip-${local.project}-${count.index + 1}"
   folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels

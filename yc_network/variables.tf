@@ -1,17 +1,13 @@
-variable "number_static_ips"{
+variable "count_static_ips"{
   default =0
 }
 variable "folder_name"{
   type ="string"
-  default =""
 }
 
 variable "zone" {
   type ="string"
   default = "ru-central1-a"
-}
-variable "vpc_cidr" {
-  default = "10.0.0.0/16"
 }
 
 variable "env" {
