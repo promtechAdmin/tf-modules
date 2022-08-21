@@ -16,13 +16,8 @@ variable "env" {
   type    = string
   default     = "prod"
 }
-variable "gateway-addresses" {
-  type= list(string)
-  default = [
-    "10.0.11.1",
-    "10.0.22.1",
-    "10.0.33.1"
-  ]
+variable "gateway-address" {
+  type= string
 }
 variable "public_subnet_cidrs" {
   type= list(string)

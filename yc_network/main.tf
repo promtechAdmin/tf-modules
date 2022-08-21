@@ -80,7 +80,7 @@ resource "yandex_vpc_route_table" "private_subnets_rt" {
   labels=var.labels
   static_route {
     destination_prefix  = "0.0.0.0/0"
-    next_hop_address    = var.gateway-addresses[count.index]
+    next_hop_address    = var.gateway-address
   }
 }
 
