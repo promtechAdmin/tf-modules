@@ -1,12 +1,13 @@
 variable "count_static_ips"{
+  type =number
   default =0
 }
 variable "folder_name"{
-  type ="string"
+  type =string
 }
 
 variable "zone" {
-  type ="string"
+  type =string
   default = "ru-central1-a"
 }
 
