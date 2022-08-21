@@ -11,7 +11,7 @@ variable "subnet_id" {
 }
 variable "security_group_ids" {
   type    = list(string)
-  default =[""]
+  default =[]
 }
 variable "folder_id" {
   type    = string
@@ -125,13 +125,13 @@ variable "openvpn_password" {
   type = string
 }
 
-variable "user" {
+variable "user_login" {
   type    = string
   default = ""
 }
 variable "instance_init_script" {
   type    = list(string)
-  default = [""]
+  default = []
 }
 
 

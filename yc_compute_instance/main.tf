@@ -18,14 +18,13 @@ data "yandex_compute_image" "ubuntu-20-04" {
 data "template_file" "cloud_init" {
   template = file("cloud-init.tmpl.yaml")
   vars     = {
-    user    = var.user
+    user    = var.user_login
     ssh_key = file(var.public_key_path)
   }
 }
 resource "yandex_compute_instance" "server" {
   count =instance_count
   name        = "${var.env}-${var.instance_name}-${count.index+1}"
-  folder_id   = var.folder_id
   platform_id = lookup(var.instance_type,var.env)
   zone        = var.zone
   hostname= "${var.env}-${var.instance_name}-${count.index+1}."
@@ -46,12 +45,12 @@ resource "yandex_compute_instance" "server" {
     }
   }
   network_interface {
-    //subnet_id = yandex_vpc_subnet.default-ru-central1-b.id
-    subnet_id = var.subnet_id
-    nat       = var.is_nat
-    //    nat_ip_address=yandex_vpc_address.openvpn_external_ip_address.external_ipv4_address.
+    subnet_id          = var.subnet_id
+    nat                = var.is_nat
+    nat_ip_address     = var.nat_ip_address
     ip_address         = var.ip_address
-    security_group_ids = [var.security_group_ids]
+    security_group_ids = var.security_group_ids
+    ipv6               = false
   }
 
   metadata = {
@@ -63,10 +62,10 @@ resource "yandex_compute_instance" "server" {
     inline =var.instance_init_script
     connection {
       type  = "ssh"
-      user  = var.user
-      //      private_key = file(var.private_key_path)
+      user  = var.user_login
+      private_key = file(var.private_key_path)
       host  = self.network_interface[0].nat_ip_address
-      agent = true
+      agent = false
     }
   }
   depends_on = []
