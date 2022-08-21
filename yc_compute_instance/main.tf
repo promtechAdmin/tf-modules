@@ -6,7 +6,6 @@ terraform {
       source  = "yandex-cloud/yandex"
       version = ">= 0.47.0"
     }
-
   }
 }
 locals{
@@ -30,7 +29,7 @@ resource "yandex_compute_instance" "server" {
   folder_id   = var.folder_id
   platform_id = lookup(var.instance_type,var.env)
   zone        = var.zone
-  hostname= "${var.env}-${var.instance_name}-${count.index+1}"
+  hostname= "${var.env}-${var.instance_name}-${count.index+1}."
 
   labels = local.labels
 
@@ -50,8 +49,9 @@ resource "yandex_compute_instance" "server" {
   network_interface {
     //subnet_id = yandex_vpc_subnet.default-ru-central1-b.id
     subnet_id = var.subnet_id
-    nat       = var.nat
+    nat       = var.is_nat
     //    nat_ip_address=yandex_vpc_address.openvpn_external_ip_address.external_ipv4_address.
+    ip_address         = var.ip_address
     security_group_ids = [var.security_group_ids]
   }
 
@@ -70,7 +70,7 @@ resource "yandex_compute_instance" "server" {
       agent = true
     }
   }
-
+  depends_on = []
   timeouts {
     create = "10m"
   }

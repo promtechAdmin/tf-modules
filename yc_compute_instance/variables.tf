@@ -30,9 +30,22 @@ variable "labels" {
   }
 }
 
-variable "nat" {
-  type    = bool
-  default = true
+variable "is_nat" {
+  description = "Provide a public address for instance to access the internet over NAT"
+  type        = bool
+  default     = false
+}
+
+variable "nat_ip_address" {
+  description = "Public IP address for instance to access the internet over NAT"
+  type        = string
+  default     = ""
+}
+
+variable "ip_address" {
+  description = "The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet"
+  type        = string
+  default     = ""
 }
 
 variable "image_family" {
@@ -55,16 +68,34 @@ variable "instance_count" {
 }
 
 variable "instance_name" {
-  type = string
+  description = "Yandex Cloud Compute instance name"
+  type        = string
+}
+
+# The hostname must be unique within the network and region
+# If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal
+# Otherwise FQDN will be <hostname>.<region_id>.internal
+variable "hostname" {
+  description = "Host name for the instance. This field is used to generate the instance fqdn value"
+  type        = string
+}
+
+variable "cores" {
+  description = "CPU cores for the instance"
+  type        = number
+  default     = 2
+}
+
+variable "memory" {
+  description = "Memory size for the instance in GB"
+  type        = number
+  default     = 2
 }
 
 variable "core_fraction" {
-  type    = number
-  default = 50
-}
-variable "cores" {
-  type    = number
-  default = 2
+  description = "Baseline performance for a core as a percent"
+  type        = number
+  default     = 50
 }
 
 variable "instance_type" {
@@ -75,11 +106,6 @@ variable "instance_type" {
     "test" = "standard-v2"
     "dev" = "standard-v2"
   }
-}
-
-variable "memory" {
-  type    = number
-  default = 2
 }
 
 variable "disk_size" {
