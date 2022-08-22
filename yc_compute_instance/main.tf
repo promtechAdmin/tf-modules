@@ -24,11 +24,11 @@ data "template_file" "cloud_init" {
 }
 #========================================================================
 resource "yandex_compute_disk" "secondary_disk" {
-  count =var.secondary_disks_count
-  name        = "${var.env}-${var.secondary_disk_name}-${count.index+1}"
+  count = length(var.secondary_disk_names)
+  name        = "${var.env}-${var.secondary_disk_names[count.index]}-${count.index+1}"
   type     = "network-ssd"
   zone     = var.zone
-  size     =20
+  size     =var.secondary_disk_size
   labels = local.labels
 }
 

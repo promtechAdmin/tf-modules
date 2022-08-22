@@ -108,18 +108,18 @@ variable "disk_size" {
   type    = number
   default = 10
 }
+variable "secondary_disk_size" {
+  type    = number
+  default = 10
+}
 
 variable "disk_type" {
   type    = string
   default = "network-ssd"
 }
-variable "secondary_disk_name" {
-  type    = string
-  default = ""
-}
-variable "secondary_disks_count" {
-  type    = number
-  default = 0
+variable "secondary_disk_names" {
+  type    = list(string)
+  default = []
 }
 
 variable "user_password" {
