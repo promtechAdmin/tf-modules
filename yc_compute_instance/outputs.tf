@@ -10,3 +10,6 @@ output "instance_external_ip" {
 output "instance_labels" {
   value=yandex_compute_instance.server.*.labels
 }
+output "secondary_disks" {
+  value=yandex_compute_disk.secondary_disk.*.id
+}

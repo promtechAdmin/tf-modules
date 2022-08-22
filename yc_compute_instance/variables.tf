@@ -113,6 +113,14 @@ variable "disk_type" {
   type    = string
   default = "network-ssd"
 }
+variable "secondary_disk_name" {
+  type    = string
+  default = ""
+}
+variable "secondary_disks_count" {
+  type    = number
+  default = 0
+}
 
 variable "user_password" {
   type = string

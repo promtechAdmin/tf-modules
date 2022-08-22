@@ -10,7 +10,7 @@ terraform {
 locals{
   labels = merge(var.labels,{name="${var.env}_${var.instance_name}"})
 }
-
+#========================================================================
 data "yandex_compute_image" "ubuntu-20-04" {
   family = var.image_family
 }
@@ -22,6 +22,16 @@ data "template_file" "cloud_init" {
     ssh_key = file(var.public_key_path)
   }
 }
+#========================================================================
+resource "yandex_compute_disk" "secondary_disk" {
+  count =var.secondary_disks_count
+  name        = "${var.env}-${var.secondary_disk_name}-${count.index+1}"
+  type     = "network-ssd"
+  zone     = var.zone
+  size     =20
+  labels = local.labels
+}
+
 resource "yandex_compute_instance" "server" {
   count =var.instance_count
   name        = "${var.env}-${var.instance_name}-${count.index+1}"
@@ -42,6 +52,13 @@ resource "yandex_compute_instance" "server" {
       image_id = data.yandex_compute_image.ubuntu-20-04.id
       type     = var.disk_type
       size     = var.disk_size
+    }
+  }
+  dynamic "secondary_disk" {
+    for_each = yandex_compute_disk.secondary_disk
+    content {
+      disk_id     = yandex_compute_disk.secondary_disk.id
+      device_name = yandex_compute_disk.secondary_disk.name
     }
   }
   network_interface {
