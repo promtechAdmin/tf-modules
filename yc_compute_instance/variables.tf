@@ -125,9 +125,6 @@ variable "secondary_disks_count" {
 variable "user_password" {
   type = string
 }
-variable "openvpn_password" {
-  type = string
-}
 
 variable "user_login" {
   type    = string

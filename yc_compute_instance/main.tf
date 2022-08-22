@@ -57,8 +57,8 @@ resource "yandex_compute_instance" "server" {
   dynamic "secondary_disk" {
     for_each = yandex_compute_disk.secondary_disk
     content {
-      disk_id     = yandex_compute_disk.secondary_disk.id
-      device_name = yandex_compute_disk.secondary_disk.name
+      disk_id     = secondary_disk.value.id
+      device_name = secondary_disk.value.name
     }
   }
   network_interface {
