@@ -9,7 +9,7 @@ terraform {
   }
 }
 resource "yandex_vpc_security_group" "security_group" {
-  name = "${var.env} ${var.name}"
+  name = "${var.env}-sg-${var.name}"
   description = var.description
   network_id=var.network_id
 

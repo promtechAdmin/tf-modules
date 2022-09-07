@@ -16,30 +16,30 @@ data "yandex_compute_image" "ubuntu-20-04" {
 }
 
 data "template_file" "cloud_init" {
-  template = file("${path.module}/cloud-init.tmpl.yaml")
-  vars     = {
-    user    = var.user_login
-    ssh_key = file(var.public_key_path)
+    template = file("${path.module}/cloud-init.tmpl.yaml")
+    vars     = {
+    user     = var.user_login
+    ssh_key  = file(var.public_key_path)
   }
 }
 #========================================================================
 resource "yandex_compute_disk" "secondary_disk" {
-  count = length(var.secondary_disk_names)
-  name        = "${var.env}-${var.secondary_disk_names[count.index]}-${count.index+1}"
+  count    = length(var.secondary_disk_names)
+  name     = "${var.env}-${var.secondary_disk_names[count.index]}-${count.index+1}"
   type     = "network-ssd"
   zone     = var.zone
-  size     =var.secondary_disk_size
-  labels = local.labels
+  size     = var.secondary_disk_size
+  labels   = local.labels
 }
 
 resource "yandex_compute_instance" "server" {
-  count =var.instance_count
-  name        = "${var.env}-${var.instance_name}-${count.index+1}"
+  count       = var.instance_count
+  name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}.promtech.local"
   platform_id = lookup(var.instance_type,var.env)
   zone        = var.zone
-  hostname= "${var.env}-${var.instance_name}-${count.index+1}."
+  hostname    = "${var.env}-${var.instance_name}-${count.index+1}."
 
-  labels = local.labels
+  labels      = local.labels
 
   resources {
     core_fraction = var.core_fraction

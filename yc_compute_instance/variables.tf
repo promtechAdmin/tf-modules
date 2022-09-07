@@ -63,7 +63,11 @@ variable "instance_count" {
 }
 
 variable "instance_name" {
-  description = "Yandex Cloud Compute instance name"
+  description = "Instance name"
+  type        = string
+}
+variable "instance_role" {
+  description = "Instance role" //ws db as
   type        = string
 }
 
