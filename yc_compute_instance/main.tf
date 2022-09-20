@@ -34,7 +34,7 @@ resource "yandex_compute_disk" "secondary_disk" {
 
 resource "yandex_compute_instance" "server" {
   count       = var.instance_count
-  name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}.promtech.local"
+  name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
   platform_id = lookup(var.instance_type,var.env)
   zone        = var.zone
   hostname    = "${var.env}-${var.instance_name}-${count.index+1}."

@@ -14,6 +14,10 @@ variable "security_group_ids" {
 variable "zone" {
   type    = string
 }
+variable "domain_fqdn" {
+  type    = string
+  default = ""
+}
 
 variable "labels" {
   type    = map
