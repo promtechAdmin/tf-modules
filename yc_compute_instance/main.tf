@@ -11,7 +11,7 @@ locals{
   labels = merge(var.labels,{name="${var.env}_${var.instance_name}"})
 }
 #========================================================================
-data "yandex_compute_image" "ubuntu-20-04" {
+data "yandex_compute_image" "ubuntu" {
   family = var.image_family
 }
 
@@ -49,7 +49,7 @@ resource "yandex_compute_instance" "server" {
   }
   boot_disk {
     initialize_params {
-      image_id = data.yandex_compute_image.ubuntu-20-04.id
+      image_id = data.yandex_compute_image.ubuntu.id
       type     = var.disk_type
       size     = var.disk_size
     }

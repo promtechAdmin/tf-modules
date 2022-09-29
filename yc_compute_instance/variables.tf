@@ -49,7 +49,7 @@ variable "ip_address" {
 
 variable "image_family" {
   type    = string
-  default = "ubuntu-2004-lts"
+  default = "ubuntu-2204-lts"
 }
 
 variable "public_key_path" {
