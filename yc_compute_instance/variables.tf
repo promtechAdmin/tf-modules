@@ -52,15 +52,15 @@ variable "image_family" {
   default = "ubuntu-2204-lts"
 }
 
-variable "public_key_path" {
-  description = "Path to ssh public key, which would be used to access workers"
-  default     = "~/.ssh/id_rsa.pub"
-}
-
-variable "private_key_path" {
-  description = "Path to ssh private key, which would be used to access workers"
-  default     = "~/.ssh/id_rsa"
-}
+#variable "public_key_path" {
+#  description = "Path to ssh public key, which would be used to access workers"
+#  default     = "~/.ssh/id_rsa.pub"
+#}
+#
+#variable "private_key_path" {
+#  description = "Path to ssh private key, which would be used to access workers"
+#  default     = "~/.ssh/id_rsa"
+#}
 variable "instance_count" {
   type    = number
   default = 1
@@ -130,14 +130,14 @@ variable "secondary_disk_names" {
   default = []
 }
 
-variable "user_password" {
-  type = string
-}
-
-variable "user_login" {
-  type    = string
-  default = ""
-}
+#variable "user_password" {
+#  type = string
+#}
+#
+#variable "user_login" {
+#  type    = string
+#  default = ""
+#}
 variable "instance_init_script" {
   type    = list(string)
   default = []
