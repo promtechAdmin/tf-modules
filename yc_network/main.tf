@@ -40,11 +40,12 @@ resource "yandex_vpc_network" "main" {
 #-------------Public Subnets and Routing----------------------------------------
 resource "yandex_vpc_subnet" "public_subnets" {
   count                   = length(var.public_subnet_cidrs)
-  name = "${var.env}-subnet${count.index + 1}-public"
+  name = "${var.env}-${var.public_subnet_cidrs[count.index].name}${count.index + 1}"
   network_id                  = yandex_vpc_network.main.id
-  v4_cidr_blocks              = [element(var.public_subnet_cidrs, count.index)]
+//  v4_cidr_blocks              = [element(var.public_subnet_cidrs, count.index)]
+  v4_cidr_blocks = [var.public_subnet_cidrs[count.index].prefix]
 //  folder_id = yandex_resourcemanager_folder.folder.id
-  zone       = var.zone
+  zone       = var.public_subnet_cidrs[count.index].zone
   labels=var.labels
   depends_on = [
     yandex_vpc_network.main
@@ -66,14 +67,15 @@ resource "yandex_vpc_address" "ext_ip" {
 #--------------Private Subnets and Routing-------------------------
 
 resource "yandex_vpc_subnet" "private_subnets" {
-  count                   = length(var.private_subnet_cidrs)
-  name = "${var.env}-subnet${count.index + 1}-private"
-  network_id                  = yandex_vpc_network.main.id
-  v4_cidr_blocks              = [element(var.private_subnet_cidrs, count.index)]
+  count           = length(var.private_subnet_cidrs)
+  name            = "${var.env}-${var.private_subnet_cidrs[count.index].name}${count.index + 1}"
+  network_id      = yandex_vpc_network.main.id
+//  v4_cidr_blocks              = [element(var.private_subnet_cidrs, count.index)]
+  v4_cidr_blocks  = [var.private_subnet_cidrs[count.index].prefix]
 //  folder_id = yandex_resourcemanager_folder.folder.id
-  zone       = var.zone
-  labels=var.labels
-  route_table_id=yandex_vpc_route_table.private_subnets_rt[count.index].id
+  zone            = var.public_subnet_cidrs[count.index].zone
+  labels          =var.labels
+  route_table_id  =yandex_vpc_route_table.private_subnets_rt[count.index].id
   depends_on = [
     yandex_vpc_network.main
   ]

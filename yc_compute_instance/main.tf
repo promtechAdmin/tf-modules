@@ -15,13 +15,13 @@ data "yandex_compute_image" "ubuntu" {
   family = var.image_family
 }
 
-data "template_file" "cloud_init" {
-    template = file("${path.module}/cloud-init.tmpl.yaml")
-    vars     = {
-    user     = var.user_login
-    ssh_key  = file(var.public_key_path)
-  }
-}
+#data "template_file" "cloud_init" {
+#    template = file("${path.module}/cloud-init.tmpl.yaml")
+#    vars     = {
+#    user     = var.user_login
+#    ssh_key  = file(var.public_key_path)
+#  }
+#}
 #========================================================================
 resource "yandex_compute_disk" "secondary_disk" {
   count    = length(var.secondary_disk_names)
@@ -71,20 +71,20 @@ resource "yandex_compute_instance" "server" {
   }
 
   metadata = {
-    user-data          = data.template_file.cloud_init.rendered
+    user-data          = var.user_data
     serial-port-enable = 1
   }
 
-  provisioner "remote-exec" {
-    inline =var.instance_init_script
-    connection {
-      type  = "ssh"
-      user  = var.user_login
-      private_key = file(var.private_key_path)
-      host  = self.network_interface[0].nat_ip_address
-      agent = false
-    }
-  }
+#  provisioner "remote-exec" {
+#    inline =var.instance_init_script
+#    connection {
+#      type  = "ssh"
+#      user  = var.user_login
+#      private_key = file(var.private_key_path)
+#      host  = self.network_interface[0].nat_ip_address
+#      agent = false
+#    }
+#  }
   depends_on = []
   timeouts {
     create = "10m"

@@ -143,7 +143,9 @@ variable "instance_init_script" {
   default = []
 }
 
+variable "user_data" {
 
+}
 #variable "admin_pass" {
 #  default = ""
 #  type    = string
