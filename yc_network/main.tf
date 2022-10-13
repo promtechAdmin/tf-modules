@@ -33,7 +33,6 @@ locals{
 resource "yandex_vpc_network" "main" {
   name = "${var.env}-vpc-${local.project}"
   description = var.description
-//  folder_id = yandex_resourcemanager_folder.folder.id
   labels=var.labels
 }
 
@@ -44,24 +43,45 @@ resource "yandex_vpc_subnet" "public_subnets" {
   network_id                  = yandex_vpc_network.main.id
 //  v4_cidr_blocks              = [element(var.public_subnet_cidrs, count.index)]
   v4_cidr_blocks = [var.public_subnet_cidrs[count.index].prefix]
-//  folder_id = yandex_resourcemanager_folder.folder.id
   zone       = var.public_subnet_cidrs[count.index].zone
+  route_table_id  =yandex_vpc_route_table.public_subnet_rt[count.index].id
   labels=var.labels
   depends_on = [
     yandex_vpc_network.main
   ]
 }
 
-#-----Static Public IPs--------------------------
-
-resource "yandex_vpc_address" "ext_ip" {
-  count = var.count_static_ips
-  name = "${var.env}-extip${count.index + 1}-${local.project}"
-//  folder_id = yandex_resourcemanager_folder.folder.id
+resource "yandex_vpc_route_table" "public_subnet_rt" {
+  count  = length(var.public_subnet_cidrs)
+  network_id  = yandex_vpc_network.main.id
+  name = "${var.env}-public_subnet_rt${count.index + 1}"
   labels=var.labels
-  external_ipv4_address {
-    zone_id       = var.zone
-  }
+
+    static_route {
+      destination_prefix = "0.0.0.0/0"
+      next_hop_address   = var.gateway-address
+    }
+
+}
+
+#-----Static Public IPs--------------------------
+#
+#resource "yandex_vpc_address" "ext_ip" {
+#  count = var.count_static_ips
+#  name = "${var.env}-extip${count.index + 1}-${local.project}"
+#//  folder_id = yandex_resourcemanager_folder.folder.id
+#  labels=var.labels
+#  external_ipv4_address {
+#    zone_id       = var.zone
+#  }
+#}
+
+
+#--------------NAT Gateway------------------------
+
+resource "yandex_vpc_gateway" "egress-gateway" {
+  name = "egress-gateway"
+  shared_egress_gateway {}
 }
 
 #--------------Private Subnets and Routing-------------------------
@@ -72,24 +92,28 @@ resource "yandex_vpc_subnet" "private_subnets" {
   network_id      = yandex_vpc_network.main.id
 //  v4_cidr_blocks              = [element(var.private_subnet_cidrs, count.index)]
   v4_cidr_blocks  = [var.private_subnet_cidrs[count.index].prefix]
-//  folder_id = yandex_resourcemanager_folder.folder.id
   zone            = var.public_subnet_cidrs[count.index].zone
   labels          =var.labels
-  route_table_id  =yandex_vpc_route_table.private_subnets_rt[count.index].id
+  route_table_id  =yandex_vpc_route_table.private_subnet_rt[count.index].id
   depends_on = [
     yandex_vpc_network.main
   ]
 }
 
-resource "yandex_vpc_route_table" "private_subnets_rt" {
+resource "yandex_vpc_route_table" "private_subnet_rt" {
   count  = length(var.private_subnet_cidrs)
   network_id  = yandex_vpc_network.main.id
-  name = "${var.env}-rt${count.index + 1}"
-//  folder_id = yandex_resourcemanager_folder.folder.id
+  name = "${var.env}-private_subnet_rt${count.index + 1}"
   labels=var.labels
+
+#  static_route {
+#    destination_prefix = "10.2.0.0/16"
+#    next_hop_address   = "172.16.10.10"
+#  }
+
   static_route {
     destination_prefix  = "0.0.0.0/0"
-    next_hop_address    = var.gateway-address
+    gateway_id         = yandex_vpc_gateway.egress-gateway.id
   }
 }
 
