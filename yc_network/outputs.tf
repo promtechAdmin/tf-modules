@@ -10,7 +10,7 @@ output "public_subnets" {
     id=v.id,
     name=v.name,
     zone=v.zone,
-    v4_cidr_blocks=v.v4_cidr_blocks
+    v4_cidr_blocks=v.v4_cidr_blocks[*]
   }) }
 }
 output "private_subnets" {
@@ -18,6 +18,6 @@ output "private_subnets" {
     id=v.id,
     name=v.name,
     zone=v.zone,
-    v4_cidr_blocks=v.v4_cidr_blocks
+    v4_cidr_blocks=v.v4_cidr_blocks[*]
   }) }
 }
