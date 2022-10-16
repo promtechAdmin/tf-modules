@@ -9,6 +9,7 @@ terraform {
 }
 locals{
   labels = merge(var.labels,{name="${var.env}_${var.instance_name}"})
+  instance_name= "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}"
 }
 #========================================================================
 data "yandex_compute_image" "ubuntu" {
@@ -34,10 +35,10 @@ resource "yandex_compute_disk" "secondary_disk" {
 
 resource "yandex_compute_instance" "server" {
   count       = var.instance_count
-  name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
+  name        = local.instance_name
   platform_id = lookup(var.instance_type,var.env)
   zone        = var.zone
-  hostname    = "${var.env}-${var.instance_name}-${count.index+1}."
+  hostname    = "${local.instance_name}.${var.domain_fqdn}"
 
   labels      = local.labels
 
