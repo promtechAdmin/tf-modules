@@ -37,7 +37,7 @@ resource "yandex_compute_instance" "server" {
   name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}"
   platform_id = lookup(var.instance_type,var.env)
   zone        = var.zone
-  hostname    = "${yandex_compute_instance.server.name}.${var.domain_fqdn}"
+  hostname    = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
 
   labels      = local.labels
 
