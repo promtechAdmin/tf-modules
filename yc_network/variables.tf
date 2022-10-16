@@ -2,16 +2,8 @@ variable "count_static_ips"{
   type =number
   default =0
 }
-variable "folder_name"{
-  type =string
-  default=""
-}
 
-variable "zone" {
-  type =string
-  default = "ru-central1-a"
-}
-variable "description" {
+variable "vpc_description" {
   type =string
   default = ""
 }
@@ -21,9 +13,14 @@ variable "env" {
   type    = string
   default     = "prod"
 }
-variable "gateway-address" {
+variable "vpn_gateway_address" {
   type= string
 }
+
+variable "vpn_client_cidrs" {
+  type= string
+}
+
 variable "public_subnet_cidrs" {
   description = "Subnet structure primitive"
   type = list(object({
@@ -78,11 +75,5 @@ variable "private_subnet_cidrs" {
 #  ]
 #}
 variable "labels" {
-  type    = map
-  default = {
-    owner = ""
-    project = ""
-    cost_center=""
-    environment=""
-  }
+
 }

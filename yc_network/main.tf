@@ -32,7 +32,7 @@ locals{
 
 resource "yandex_vpc_network" "main" {
   name = "${var.env}-vpc-${local.project}"
-  description = var.description
+  description = var.vpc_description
   labels=var.labels
 }
 
@@ -46,9 +46,7 @@ resource "yandex_vpc_subnet" "public_subnets" {
   zone       = var.public_subnet_cidrs[count.index].zone
   route_table_id  =yandex_vpc_route_table.public_subnet_rt[count.index].id
   labels=var.labels
-  depends_on = [
-    yandex_vpc_network.main
-  ]
+  depends_on = [yandex_vpc_network.main, yandex_vpc_route_table.public_subnet_rt]
 }
 
 resource "yandex_vpc_route_table" "public_subnet_rt" {
@@ -57,11 +55,16 @@ resource "yandex_vpc_route_table" "public_subnet_rt" {
   name = "${var.env}-public_subnet_rt${count.index + 1}"
   labels=var.labels
 
-    static_route {
-      destination_prefix = "0.0.0.0/0"
-      next_hop_address   = var.gateway-address
-    }
+  static_route {
+    destination_prefix = var.vpn_client_cidrs
+    next_hop_address   = var.vpn_gateway_address
+  }
 
+  static_route {
+    destination_prefix  = "0.0.0.0/0"
+    gateway_id         = yandex_vpc_gateway.egress-gateway.id
+  }
+  depends_on = [yandex_vpc_gateway.egress-gateway]
 }
 
 #-----Static Public IPs--------------------------
@@ -95,9 +98,7 @@ resource "yandex_vpc_subnet" "private_subnets" {
   zone            = var.public_subnet_cidrs[count.index].zone
   labels          =var.labels
   route_table_id  =yandex_vpc_route_table.private_subnet_rt[count.index].id
-  depends_on = [
-    yandex_vpc_network.main
-  ]
+  depends_on = [yandex_vpc_network.main,yandex_vpc_route_table.private_subnet_rt]
 }
 
 resource "yandex_vpc_route_table" "private_subnet_rt" {
@@ -106,15 +107,16 @@ resource "yandex_vpc_route_table" "private_subnet_rt" {
   name = "${var.env}-private_subnet_rt${count.index + 1}"
   labels=var.labels
 
-#  static_route {
-#    destination_prefix = "10.2.0.0/16"
-#    next_hop_address   = "172.16.10.10"
-#  }
+  static_route {
+    destination_prefix = var.vpn_client_cidrs
+    next_hop_address   = var.vpn_gateway_address
+  }
 
   static_route {
     destination_prefix  = "0.0.0.0/0"
     gateway_id         = yandex_vpc_gateway.egress-gateway.id
   }
+  depends_on = [yandex_vpc_gateway.egress-gateway]
 }
 
 
