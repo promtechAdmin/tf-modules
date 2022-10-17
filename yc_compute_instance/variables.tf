@@ -16,7 +16,6 @@ variable "zone" {
 }
 variable "domain_fqdn" {
   type    = string
-  default = ""
 }
 
 variable "labels" {
