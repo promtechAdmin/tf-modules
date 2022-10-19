@@ -101,16 +101,19 @@ variable "core_fraction" {
   default     = 50
 }
 
-variable "instance_type" {
-  description = "instance types"
-  type    = map
-  default     = {
-    "prod" = "standard-v2"
-    "test" = "standard-v2"
-    "dev" = "standard-v2"
-  }
+#variable "instance_platform" {
+#  description = "instance platform"
+#  type    = map
+#  default     = {
+#    "prod" = "standard-v2"
+#    "test" = "standard-v2"
+#    "dev" = "standard-v2"
+#  }
+#}
+variable "instance_platform" {
+  type = string
+  default = "standard-v2"
 }
-
 variable "disk_size" {
   type    = number
   default = 10
