@@ -14,7 +14,7 @@ locals{
   labels = merge(var.labels,{name="${var.env}_${var.instance_name}"})
 }
 resource "yandex_mdb_postgresql_cluster" "pg_cluster" {
-  name        = "${var.env}-cluster${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
+  name        = "${var.env}-cluster${var.instance_role}-${var.instance_name}"
   environment = var.cluster_env
   network_id = var.network_id
   labels   = var.labels
