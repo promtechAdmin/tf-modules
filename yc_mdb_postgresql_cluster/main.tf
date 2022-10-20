@@ -33,13 +33,14 @@ resource "yandex_mdb_postgresql_cluster" "pg_cluster" {
 #      default_transaction_isolation     = "TRANSACTION_ISOLATION_READ_COMMITTED"
 #      shared_preload_libraries          = "SHARED_PRELOAD_LIBRARIES_AUTO_EXPLAIN,SHARED_PRELOAD_LIBRARIES_PG_HINT_PLAN"
 #    }
+    access {
+      data_lens=var.data_lens
+      web_sql=var.web_sql
+      serverless=var.serverless
+      data_transfer=var.data_transfer
+    }
   }
-  access {
-    data_lens=var.data_lens
-    web_sql=var.web_sql
-    serverless=var.serverless
-  data_transfer=var.data_transfer
-  }
+
   maintenance_window {
     type = "WEEKLY"
     day  = "SAT"
