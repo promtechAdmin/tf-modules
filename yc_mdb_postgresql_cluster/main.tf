@@ -25,14 +25,14 @@ resource "yandex_mdb_postgresql_cluster" "pg_cluster" {
       disk_type_id = var.disk_type
       disk_size = var.disk_size
     }
-    postgresql_config = {
-      max_connections                   = 395
-      enable_parallel_hash              = true
-      vacuum_cleanup_index_scale_factor = 0.2
-      autovacuum_vacuum_scale_factor    = 0.34
-      default_transaction_isolation     = "TRANSACTION_ISOLATION_READ_COMMITTED"
-      shared_preload_libraries          = "SHARED_PRELOAD_LIBRARIES_AUTO_EXPLAIN,SHARED_PRELOAD_LIBRARIES_PG_HINT_PLAN"
-    }
+#    postgresql_config = {
+#      max_connections                   = 500
+#      enable_parallel_hash              = true
+#      vacuum_cleanup_index_scale_factor = 0.2
+#      autovacuum_vacuum_scale_factor    = 0.34
+#      default_transaction_isolation     = "TRANSACTION_ISOLATION_READ_COMMITTED"
+#      shared_preload_libraries          = "SHARED_PRELOAD_LIBRARIES_AUTO_EXPLAIN,SHARED_PRELOAD_LIBRARIES_PG_HINT_PLAN"
+#    }
   }
   access {
     data_lens=var.data_lens
