@@ -82,12 +82,12 @@ variable "pg_db_names" {
   type = list(string)
 }
 
-variable "pg_db_user" {
+variable "cluster_user" {
   description = "PostgeSQL database user name"
   type = string
 }
 
-variable "pg_db_pass" {
+variable "cluster_user_pass" {
   description = "PostgeSQL database user's password"
   type = string
 }

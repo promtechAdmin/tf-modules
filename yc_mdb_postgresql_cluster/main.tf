@@ -62,8 +62,8 @@ resource "yandex_mdb_postgresql_cluster" "pg_cluster" {
 
 resource "yandex_mdb_postgresql_user" "pg_user" {
   cluster_id = yandex_mdb_postgresql_cluster.pg_cluster.id
-  name = var.pg_db_user
-  password = var.pg_db_pass
+  name = var.cluster_user
+  password = var.cluster_user_pass
 }
 
 resource "yandex_mdb_postgresql_database" "pg_db" {
