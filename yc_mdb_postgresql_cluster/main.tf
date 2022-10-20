@@ -39,6 +39,9 @@ resource "yandex_mdb_postgresql_cluster" "pg_cluster" {
       serverless=var.serverless
       data_transfer=var.data_transfer
     }
+    performance_diagnostics {
+      enabled="true"
+    }
   }
 
   maintenance_window {
