@@ -60,3 +60,17 @@ resource "yandex_mdb_postgresql_cluster" "pg_cluster" {
   deletion_protection=true
 }
 
+resource "yandex_mdb_postgresql_user" "pg_user" {
+  cluster_id = yandex_mdb_postgresql_cluster.pg_cluster.id
+  name = var.pg_db_user
+  password = var.pg_db_pass
+}
+
+resource "yandex_mdb_postgresql_database" "pg_db" {
+  count    = length(var.pg_db_names)
+  cluster_id = yandex_mdb_postgresql_cluster.pg_cluster.id
+  name       = element(var.pg_db_names,count.index)
+  owner      = yandex_mdb_postgresql_user.pg_user.name
+  lc_collate = "ru_RU.UTF-8"
+  lc_type    = "ru_RU.UTF-8"
+}

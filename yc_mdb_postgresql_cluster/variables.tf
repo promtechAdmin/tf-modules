@@ -76,3 +76,18 @@ variable "data_transfer" {
   type    = string
   default = "false"
 }
+
+variable "pg_db_names" {
+  description = "PostgeSQL cluster database names"
+  type = list(string)
+}
+
+variable "pg_db_user" {
+  description = "PostgeSQL database user name"
+  type = string
+}
+
+variable "pg_db_pass" {
+  description = "PostgeSQL database user's password"
+  type = string
+}
