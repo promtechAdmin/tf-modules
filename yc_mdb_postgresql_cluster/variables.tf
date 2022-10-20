@@ -3,6 +3,10 @@ variable "env" {
   type    = string
   default     = "prod"
 }
+variable "cluster_env" {
+  description = "Cluster Environment"
+  type    = string
+}
 variable "subnet_id" {
   type    = string
 }
@@ -58,4 +62,33 @@ variable "pg_db_user" {
 variable "pg_db_pass" {
   description = "PostgeSQL database user's password"
   type = string
+}
+
+variable "disk_size" {
+  type    = number
+  default = 10
+}
+
+variable "disk_type" {
+  type    = string
+  default = "network-ssd"
+}
+variable "resource_preset_id" {
+  type    = string
+}
+variable "data_lens" {
+  type    = string
+  default = "false"
+}
+variable "web_sql" {
+  type    = string
+  default = "false"
+}
+variable "serverless" {
+  type    = string
+  default = "false"
+}
+variable "data_transfer" {
+  type    = string
+  default = "false"
 }
