@@ -41,7 +41,10 @@ resource "yandex_mdb_postgresql_cluster" "pg_cluster" {
     }
     performance_diagnostics {
       enabled="true"
-    }
+      sessions_sampling_interval = "10"
+    statements_sampling_interval="600"
+
+  }
   }
 
   maintenance_window {
