@@ -55,30 +55,12 @@ resource "yandex_vpc_route_table" "public_subnet_rt" {
   name = "${var.env}-public_subnet_rt${count.index + 1}"
   labels=var.labels
 
-#  static_route {
-#    destination_prefix = var.vpn_client_cidrs
-#    next_hop_address   = var.vpn_gateway_address
-#  }
-
   static_route {
     destination_prefix  = "0.0.0.0/0"
-    gateway_id         = var.vpn_gateway_address
+    next_hop_address         = var.vpn_gateway_address
   }
   depends_on = [yandex_vpc_gateway.egress-gateway]
 }
-
-#-----Static Public IPs--------------------------
-#
-#resource "yandex_vpc_address" "ext_ip" {
-#  count = var.count_static_ips
-#  name = "${var.env}-extip${count.index + 1}-${local.project}"
-#//  folder_id = yandex_resourcemanager_folder.folder.id
-#  labels=var.labels
-#  external_ipv4_address {
-#    zone_id       = var.zone
-#  }
-#}
-
 
 #--------------NAT Gateway------------------------
 
