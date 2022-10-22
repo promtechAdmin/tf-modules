@@ -38,10 +38,10 @@ resource "yandex_compute_instance_group" "instance_group" {
   service_account_id  = var.service_account_id
   deletion_protection = var.deletion_protection
   instance_template {
-    name        = "${var.env}-s${var.instance_role}-${var.instance_name}"
+    name        = "${var.env}-s${index}${var.instance_role}-${var.instance_name}"
     #platform_id = lookup(var.instance_platform,var.env)
     platform_id = var.instance_platform
-    hostname    = "${var.env}-s${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
+    hostname    = "${var.env}-s${index}${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
 
     labels = local.labels
 
