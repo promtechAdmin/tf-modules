@@ -36,7 +36,7 @@ resource "yandex_compute_instance_group" "instance_group" {
   name                = var.instance_group_name
   folder_id           = var.folder_id
   service_account_id  = var.service_account_id
-  deletion_protection = true
+  deletion_protection = var.deletion_protection
   instance_template {
     count       = var.instance_count
     name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}"

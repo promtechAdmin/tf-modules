@@ -218,3 +218,7 @@ variable "stabilization_duration" {
   type    = number
   default = 300
 }
+variable "deletion_protection" {
+  type    = bool
+  default = true
+}
