@@ -18,8 +18,12 @@ variable "security_group_ids" {
 }
 
 variable "zone" {
-  type    = string
+  type    = list(string)
 }
+variable "ig_zones" {
+  type    = list(string)
+}
+
 variable "domain_fqdn" {
   type    = string
 }
@@ -221,7 +225,4 @@ variable "stabilization_duration" {
 variable "deletion_protection" {
   type    = bool
   default = true
-}
-variable "ig_zones" {
-  type    = string
 }
