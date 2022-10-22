@@ -3,8 +3,8 @@ variable "env" {
   type    = string
   default     = "prod"
 }
-variable "subnet_id" {
-  type    = string
+variable "subnet_ids" {
+  type    = list(string)
 }
 variable "folder_id" {
   type    = string

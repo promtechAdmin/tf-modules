@@ -66,7 +66,7 @@ resource "yandex_compute_instance_group" "instance_group" {
       }
     }
     network_interface {
-      subnet_ids          = var.subnet_id
+      subnet_ids          = var.subnet_ids
       nat                = var.is_nat
       nat_ip_address     = var.nat_ip_address
       ip_address         = var.ip_address
