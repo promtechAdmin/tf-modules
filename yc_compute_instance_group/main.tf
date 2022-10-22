@@ -117,6 +117,6 @@ resource "yandex_compute_instance_group" "instance_group" {
   lifecycle {
     create_before_destroy = true
   }
-  allow_stopping_for_update = true
+
 }
 
