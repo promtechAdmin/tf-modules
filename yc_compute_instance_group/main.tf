@@ -41,7 +41,6 @@ resource "yandex_compute_instance_group" "instance_group" {
     name        = "${var.env}-s${var.instance_role}-${var.instance_name}"
     #platform_id = lookup(var.instance_platform,var.env)
     platform_id = var.instance_platform
-    zone        = var.zone
     hostname    = "${var.env}-s${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
 
     labels = local.labels
@@ -67,7 +66,7 @@ resource "yandex_compute_instance_group" "instance_group" {
       }
     }
     network_interface {
-      subnet_id          = var.subnet_id
+      subnet_ids          = var.subnet_id
       nat                = var.is_nat
       nat_ip_address     = var.nat_ip_address
       ip_address         = var.ip_address
