@@ -18,7 +18,7 @@ variable "security_group_ids" {
 }
 
 variable "zone" {
-  type    = list(string)
+  type    = string
 }
 variable "ig_zones" {
   type    = list(string)
