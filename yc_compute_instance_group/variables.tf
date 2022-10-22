@@ -222,3 +222,6 @@ variable "deletion_protection" {
   type    = bool
   default = true
 }
+variable "ig_zones" {
+  type    = string
+}

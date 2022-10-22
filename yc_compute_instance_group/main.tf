@@ -98,7 +98,7 @@ resource "yandex_compute_instance_group" "instance_group" {
   }
 
   allocation_policy {
-    zones = var.zone
+    zones = var.ig_zones
   }
 
   deploy_policy {
