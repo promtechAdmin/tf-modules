@@ -1,5 +1,5 @@
 # ==========================
-# YC MDB Postgress Resources
+# YC MDB Postgres Resources
 # ==========================
 terraform {
   required_version = ">= 0.13"
