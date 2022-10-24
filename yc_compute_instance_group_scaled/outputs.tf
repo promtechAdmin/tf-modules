@@ -9,5 +9,5 @@ output "compute_instance_group_instances" {
   }
 }
 output "load_balancer_target_group_id" {
-  value = yandex_compute_instance_group.instance_group.load_balancer.target_group_id
+  value = yandex_compute_instance_group.instance_group.load_balancer.*.target_group_id
 }
