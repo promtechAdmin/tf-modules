@@ -32,7 +32,7 @@ resource "yandex_compute_disk" "secondary_disk" {
   labels = local.labels
 }
 
-resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
+resource "yandex_compute_instance_group" "instance_group" {
   count               = var.fixed_scale_group ? 1 : 0
   name                = var.instance_group_name
   folder_id           = var.folder_id
@@ -117,7 +117,7 @@ resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
 
 }
 
-resource "yandex_compute_instance_group" "instance_group_auto_scale" {
+resource "yandex_compute_instance_group" "instance_group" {
   count               = var.fixed_scale_group ? 0 : 1
   name                = var.instance_group_name
   folder_id           = var.folder_id
