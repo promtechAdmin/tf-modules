@@ -34,7 +34,7 @@ resource "yandex_vpc_security_group" "security_group" {
       description    = "udp ${ingress.value} allow"
       v4_cidr_blocks      = ["0.0.0.0/0"]
       from_port  = ingress.value.from
-      to_port  = ingress.value.tu
+      to_port  = ingress.value.to
     }
   }
 
