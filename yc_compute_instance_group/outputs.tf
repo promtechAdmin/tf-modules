@@ -5,6 +5,6 @@ output "compute_instance_group_id" {
 output "compute_instance_group_instances" {
   value = {
   for instance in yandex_compute_instance_group.instance_group.instances :
-  instance.name => instance.ip_address
+  instance.name => instance.network_interface.0.ip_address
   }
 }
