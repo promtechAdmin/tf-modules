@@ -98,7 +98,9 @@ resource "yandex_compute_instance_group" "instance_group" {
   allocation_policy {
     zones = var.ig_zones
   }
-
+  load_balancer {
+    target_group_name=var.lb_target_group_name
+  }
   deploy_policy {
     max_unavailable  = var.max_unavailable
     max_creating     = var.max_creating

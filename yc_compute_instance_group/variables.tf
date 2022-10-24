@@ -229,3 +229,6 @@ variable "deletion_protection" {
   type    = bool
   default = true
 }
+variable "lb_target_group_name" {
+  type    = string
+}
