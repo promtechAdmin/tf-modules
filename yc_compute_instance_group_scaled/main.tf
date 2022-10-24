@@ -90,6 +90,8 @@ resource "yandex_compute_instance_group" "instance_group" {
       cpu_utilization_target = var.cpu_utilization_target
       warmup_duration        = var.warmup_duration
       stabilization_duration = var.stabilization_duration
+      min_zone_size = var.min_zone_size
+      max_size = var.max_size
     }
   }
 

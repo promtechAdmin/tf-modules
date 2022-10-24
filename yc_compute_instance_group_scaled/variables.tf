@@ -225,6 +225,14 @@ variable "stabilization_duration" {
   type    = number
   default = 300
 }
+variable "min_zone_size" {
+  type    = number
+  default = 1
+}
+variable "max_size" {
+  type    = number
+  default = 2
+}
 variable "deletion_protection" {
   type    = bool
   default = true
