@@ -33,7 +33,7 @@ resource "yandex_compute_disk" "secondary_disk" {
 }
 
 resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
-  count =var.fixed_scale_group ? 1 : 0
+  count               = var.fixed_scale_group ? 1 : 0
   name                = var.instance_group_name
   folder_id           = var.folder_id
   service_account_id  = var.service_account_id
@@ -62,12 +62,14 @@ resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
     dynamic "secondary_disk" {
       for_each = yandex_compute_disk.secondary_disk
       content {
-        disk_id = secondary_disk.value.id
-        #     device_name = secondary_disk.value.name
+        initialize_params {
+          disk_id = secondary_disk.value.id
+          #     device_name = secondary_disk.value.name
+        }
       }
     }
     network_interface {
-      subnet_ids          = var.subnet_ids
+      subnet_ids         = var.subnet_ids
       nat                = var.is_nat
       nat_ip_address     = var.nat_ip_address
       ip_address         = var.ip_address
@@ -83,7 +85,7 @@ resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
     }
   }
 
-  scale_policy  {
+  scale_policy {
     fixed_scale {
       size = var.size
     }
@@ -93,7 +95,7 @@ resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
     zones = var.ig_zones
   }
   load_balancer {
-    target_group_name=var.lb_target_group_name
+    target_group_name = var.lb_target_group_name
   }
   deploy_policy {
     max_unavailable  = var.max_unavailable
@@ -104,7 +106,7 @@ resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
     strategy         = var.strategy
   }
 
-  labels = local.labels
+  labels     = local.labels
   depends_on = []
   timeouts {
     create = "10m"
@@ -116,7 +118,7 @@ resource "yandex_compute_instance_group" "instance_group_fixed_scale" {
 }
 
 resource "yandex_compute_instance_group" "instance_group_auto_scale" {
-  count =var.fixed_scale_group ? 0 : 1
+  count               = var.fixed_scale_group ? 0 : 1
   name                = var.instance_group_name
   folder_id           = var.folder_id
   service_account_id  = var.service_account_id
@@ -145,12 +147,14 @@ resource "yandex_compute_instance_group" "instance_group_auto_scale" {
     dynamic "secondary_disk" {
       for_each = yandex_compute_disk.secondary_disk
       content {
-        disk_id = secondary_disk.value.id
-        #     device_name = secondary_disk.value.name
+        initialize_params {
+          disk_id = secondary_disk.value.id
+          #     device_name = secondary_disk.value.name
+        }
       }
     }
     network_interface {
-      subnet_ids          = var.subnet_ids
+      subnet_ids         = var.subnet_ids
       nat                = var.is_nat
       nat_ip_address     = var.nat_ip_address
       ip_address         = var.ip_address
@@ -166,7 +170,7 @@ resource "yandex_compute_instance_group" "instance_group_auto_scale" {
     }
   }
 
-  scale_policy  {
+  scale_policy {
     auto_scale {
       initial_size           = var.initial_size
       measurement_duration   = var.measurement_duration
@@ -180,7 +184,7 @@ resource "yandex_compute_instance_group" "instance_group_auto_scale" {
     zones = var.ig_zones
   }
   load_balancer {
-    target_group_name=var.lb_target_group_name
+    target_group_name = var.lb_target_group_name
   }
   deploy_policy {
     max_unavailable  = var.max_unavailable
@@ -191,7 +195,7 @@ resource "yandex_compute_instance_group" "instance_group_auto_scale" {
     strategy         = var.strategy
   }
 
-  labels = local.labels
+  labels     = local.labels
   depends_on = []
   timeouts {
     create = "10m"
