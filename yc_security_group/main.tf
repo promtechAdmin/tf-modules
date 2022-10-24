@@ -22,9 +22,8 @@ resource "yandex_vpc_security_group" "security_group" {
       protocol    = "tcp"
       description    = "tcp ${ingress.value} allow"
       v4_cidr_blocks      = ["0.0.0.0/0"]
-      port = ingress.value
-      #      from_port  = ingress.value
-#      to_port  = ingress.value
+      from_port  = ingress.value.from
+      to_port  = ingress.value.to
     }
   }
   //tcp
@@ -34,9 +33,8 @@ resource "yandex_vpc_security_group" "security_group" {
       protocol    = "udp"
       description    = "udp ${ingress.value} allow"
       v4_cidr_blocks      = ["0.0.0.0/0"]
-      port = ingress.value
-#      from_port  = ingress.value
-      #      to_port  = ingress.value
+      from_port  = ingress.value.from
+      to_port  = ingress.value.tu
     }
   }
 

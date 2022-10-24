@@ -15,11 +15,11 @@ variable "network_id" {
 }
 
 variable "allow_tcp_ports" {
-  type    = list(string)
+  type    = list(map)
   default = []
 }
 variable "allow_udp_ports" {
-  type    = list(string)
+  type    = list(map)
   default = []
 }
 
