@@ -233,5 +233,5 @@ variable "lb_target_group_name" {
   type    = string
 }
 variable "fixed_scale_group" {
-  type    = boolean
+  type    = bool
 }
