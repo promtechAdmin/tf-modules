@@ -26,6 +26,7 @@ variable "ig_zones" {
 
 variable "domain_fqdn" {
   type    = string
+  default = ""
 }
 
 variable "labels" {
@@ -78,6 +79,7 @@ variable "instance_count" {
 variable "instance_name" {
   description = "Instance name"
   type        = string
+  default = ""
 }
 variable "instance_group_name" {
   description = "Instance group name"
@@ -86,6 +88,7 @@ variable "instance_group_name" {
 variable "instance_role" {
   description = "Instance role" //ws db as
   type        = string
+  default = "as"
 }
 
 # The hostname must be unique within the network and region
