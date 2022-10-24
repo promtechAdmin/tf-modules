@@ -20,7 +20,7 @@ resource "yandex_vpc_security_group" "security_group" {
     for_each = var.allow_tcp_ports
     content {
       protocol    = "tcp"
-      description    = "tcp ${ingress.value} allow"
+      description    = "tcp ${ingress.value.from}-${ingress.value.to} allow"
       v4_cidr_blocks      = ["0.0.0.0/0"]
       from_port  = ingress.value.from
       to_port  = ingress.value.to
@@ -31,7 +31,7 @@ resource "yandex_vpc_security_group" "security_group" {
     for_each = var.allow_udp_ports
     content {
       protocol    = "udp"
-      description    = "udp ${ingress.value} allow"
+      description    = "udp ${ingress.value.from}-${ingress.value.to} allow"
       v4_cidr_blocks      = ["0.0.0.0/0"]
       from_port  = ingress.value.from
       to_port  = ingress.value.to
