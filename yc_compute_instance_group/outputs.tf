@@ -8,3 +8,6 @@ output "compute_instance_group_instances" {
   instance.name => instance.network_interface.0.ip_address
   }
 }
+output "load_balancer_target_group_id" {
+  value = yandex_compute_instance_group.instance_group.load_balancer.target_group_id
+}
