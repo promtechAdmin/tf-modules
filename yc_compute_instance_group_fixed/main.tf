@@ -61,10 +61,8 @@ resource "yandex_compute_instance_group" "instance_group" {
     dynamic "secondary_disk" {
       for_each = yandex_compute_disk.secondary_disk
       content {
-        initialize_params {
           disk_id = secondary_disk.value.id
           #     device_name = secondary_disk.value.name
-        }
       }
     }
     network_interface {
