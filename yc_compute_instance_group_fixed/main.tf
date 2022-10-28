@@ -33,7 +33,7 @@ resource "yandex_compute_disk" "secondary_disk" {
 }
 
 resource "yandex_compute_instance_group" "instance_group" {
-  name                = var.instance_group_name
+  name                = "${var.env}-${var.instance_name}-instance-group"
   folder_id           = var.folder_id
   service_account_id  = var.service_account_id
   deletion_protection = var.deletion_protection
@@ -92,7 +92,7 @@ resource "yandex_compute_instance_group" "instance_group" {
     zones = var.ig_zones
   }
   load_balancer {
-    target_group_name = var.lb_target_group_name
+    target_group_name = "${var.env}-${var.instance_name}-load-balancer"
   }
   deploy_policy {
     max_unavailable  = var.max_unavailable

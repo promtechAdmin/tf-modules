@@ -81,10 +81,7 @@ variable "instance_name" {
   type        = string
   default = ""
 }
-variable "instance_group_name" {
-  description = "Instance group name"
-  type        = string
-}
+
 variable "instance_role" {
   description = "Instance role" //ws db as
   type        = string
@@ -228,7 +225,4 @@ variable "stabilization_duration" {
 variable "deletion_protection" {
   type    = bool
   default = true
-}
-variable "lb_target_group_name" {
-  type    = string
 }
