@@ -34,11 +34,11 @@ resource "yandex_compute_disk" "secondary_disk" {
 
 resource "yandex_compute_instance" "server" {
   count       = var.instance_count
-  name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}"
+  name        = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}-sever"
   #platform_id = lookup(var.instance_platform,var.env)
   platform_id = var.instance_platform
   zone        = var.zone
-  hostname    = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}.${var.domain_fqdn}"
+  hostname    = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}-server.${var.domain_fqdn}"
 
   labels      = local.labels
 
