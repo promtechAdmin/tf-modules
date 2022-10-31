@@ -226,3 +226,14 @@ variable "deletion_protection" {
   type    = bool
   default = true
 }
+variable "min_zone_size" {
+  type    = number
+  default = 1
+}
+variable "max_size" {
+  type    = number
+  default = 2
+}
+variable "scale_policy" {
+  type    = string
+}

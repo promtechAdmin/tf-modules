@@ -61,8 +61,8 @@ resource "yandex_compute_instance_group" "instance_group" {
     dynamic "secondary_disk" {
       for_each = yandex_compute_disk.secondary_disk
       content {
-          disk_id = secondary_disk.value.id
-          #     device_name = secondary_disk.value.name
+        disk_id = secondary_disk.value.id
+        #     device_name = secondary_disk.value.name
       }
     }
     network_interface {
@@ -88,6 +88,36 @@ resource "yandex_compute_instance_group" "instance_group" {
   load_balancer {
     target_group_name = "${var.env}-${var.instance_name}-load-balancer"
   }
+
+  dynamic "scale_policy_auto_scale" {
+    for_each = var.scale_policy=="auto_scale"?[var.scale_policy] : []
+    content {
+      auto_scale {
+        initial_size           = var.initial_size
+        measurement_duration   = var.measurement_duration
+        cpu_utilization_target = var.cpu_utilization_target
+        warmup_duration        = var.warmup_duration
+        stabilization_duration = var.stabilization_duration
+        min_zone_size          = var.min_zone_size
+        max_size               = var.max_size
+      }
+    }
+  }
+
+
+  dynamic "scale_policy_fixed_scale" {
+    for_each = var.scale_policy=="fixed_scale"?[var.scale_policy] : []
+    content {
+      scale_policy {
+        fixed_scale {
+          size = var.size
+        }
+      }
+
+    }
+  }
+
+
   deploy_policy {
     max_unavailable  = var.max_unavailable
     max_creating     = var.max_creating
