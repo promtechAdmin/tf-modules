@@ -82,6 +82,12 @@ resource "yandex_compute_instance_group" "instance_group" {
     }
   }
 
+  scale_policy {
+    fixed_scale {
+      size = var.size
+    }
+  }
+
   allocation_policy {
     zones = var.ig_zones
   }
