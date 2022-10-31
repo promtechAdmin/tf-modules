@@ -89,7 +89,7 @@ resource "yandex_compute_instance_group" "instance_group" {
     target_group_name = "${var.env}-${var.instance_name}-load-balancer"
   }
 
-  dynamic "scale_policy_auto_scale" {
+  dynamic "scale_policy" {
     for_each = var.scale_policy=="auto_scale"?[var.scale_policy] : []
     content {
       auto_scale {
@@ -105,7 +105,7 @@ resource "yandex_compute_instance_group" "instance_group" {
   }
 
 
-  dynamic "scale_policy_fixed_scale" {
+  dynamic "scale_policy" {
     for_each = var.scale_policy=="fixed_scale"?[var.scale_policy] : []
     content {
       scale_policy {
