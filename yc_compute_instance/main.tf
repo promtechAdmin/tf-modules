@@ -3,12 +3,12 @@ terraform {
 
   required_providers {
     yandex = {
-      source  = "yandex-cloud/yandex"
+      source = "yandex-cloud/yandex"
     }
   }
 }
-locals{
-  labels = merge(var.labels,{name="${var.env}_${var.instance_name}"})
+locals {
+  labels = merge(var.labels, { name = "${var.env}_${var.instance_name}" })
 }
 #========================================================================
 data "yandex_compute_image" "ubuntu" {
@@ -24,12 +24,12 @@ data "yandex_compute_image" "ubuntu" {
 #}
 #========================================================================
 resource "yandex_compute_disk" "secondary_disk" {
-  count    = length(var.secondary_disk_names)
-  name     = "${var.env}-${var.secondary_disk_names[count.index]}${count.index+1}"
-  type     = "network-ssd"
-  zone     = var.zone
-  size     = var.secondary_disk_size
-  labels   = local.labels
+  count  = length(var.secondary_disk_names)
+  name   = "${var.env}-${var.secondary_disk_names[count.index]}${count.index+1}"
+  type   = "network-ssd"
+  zone   = var.zone
+  size   = var.secondary_disk_size
+  labels = local.labels
 }
 
 resource "yandex_compute_instance" "server" {
@@ -40,7 +40,7 @@ resource "yandex_compute_instance" "server" {
   zone        = var.zone
   hostname    = "${var.env}-s${count.index+1}${var.instance_role}-${var.instance_name}-server.${var.domain_fqdn}"
 
-  labels      = local.labels
+  labels = local.labels
 
   resources {
     core_fraction = var.core_fraction
@@ -50,7 +50,7 @@ resource "yandex_compute_instance" "server" {
   }
   boot_disk {
     initialize_params {
-      image_id = data.yandex_compute_image.ubuntu.id
+      image_id = var.disk_image == null ? data.yandex_compute_image.ubuntu.id : var.disk_image
       type     = var.disk_type
       size     = var.disk_size
     }
@@ -58,8 +58,8 @@ resource "yandex_compute_instance" "server" {
   dynamic "secondary_disk" {
     for_each = yandex_compute_disk.secondary_disk
     content {
-      disk_id     = secondary_disk.value.id
- #     device_name = secondary_disk.value.name
+      disk_id = secondary_disk.value.id
+      #     device_name = secondary_disk.value.name
     }
   }
   network_interface {
@@ -76,16 +76,16 @@ resource "yandex_compute_instance" "server" {
     serial-port-enable = 1
   }
 
-#  provisioner "remote-exec" {
-#    inline =var.instance_init_script
-#    connection {
-#      type  = "ssh"
-#      user  = var.user_login
-#      private_key = file(var.private_key_path)
-#      host  = self.network_interface[0].nat_ip_address
-#      agent = false
-#    }
-#  }
+  #  provisioner "remote-exec" {
+  #    inline =var.instance_init_script
+  #    connection {
+  #      type  = "ssh"
+  #      user  = var.user_login
+  #      private_key = file(var.private_key_path)
+  #      host  = self.network_interface[0].nat_ip_address
+  #      agent = false
+  #    }
+  #  }
   depends_on = []
   timeouts {
     create = "10m"

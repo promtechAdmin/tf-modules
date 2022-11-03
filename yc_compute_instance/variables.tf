@@ -127,6 +127,10 @@ variable "disk_type" {
   type    = string
   default = "network-ssd"
 }
+variable "disk_image" {
+  type    = string
+  default = null
+}
 variable "secondary_disk_names" {
   type    = list(string)
   default = []
