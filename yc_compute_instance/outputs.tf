@@ -7,8 +7,8 @@ output "instance_internal_ip" {
 output "instance_external_ip" {
   value=yandex_compute_instance.server.*.network_interface.0.nat_ip_address
 }
-output "boot_disk_id" {
-  value=yandex_compute_instance.server.*.boot_disk.disk_id
+output "boot_disk" {
+  value=yandex_compute_instance.server.*.boot_disk
 }
 output "instance_labels" {
   value=yandex_compute_instance.server.*.labels
