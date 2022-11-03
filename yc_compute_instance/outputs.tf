@@ -1,3 +1,6 @@
+output "instance_id" {
+  value=yandex_compute_instance.server.*.fqdn
+}
 output "instance_name" {
   value=yandex_compute_instance.server.*.fqdn
 }
