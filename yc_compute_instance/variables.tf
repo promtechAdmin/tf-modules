@@ -136,23 +136,9 @@ variable "secondary_disk_names" {
   default = []
 }
 
-#variable "user_password" {
-#  type = string
-#}
-#
-#variable "user_login" {
-#  type    = string
-#  default = ""
-#}
 variable "instance_init_script" {
   type    = list(string)
   default = []
 }
 
-variable "user_data" {
-
-}
-#variable "admin_pass" {
-#  default = ""
-#  type    = string
-#}
+variable "user_data" {}
