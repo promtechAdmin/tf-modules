@@ -237,3 +237,7 @@ variable "max_size" {
 variable "scale_policy" {
   type    = string
 }
+variable "disk_image" {
+  type    = string
+  default = null
+}

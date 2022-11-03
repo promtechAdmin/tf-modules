@@ -53,7 +53,7 @@ resource "yandex_compute_instance_group" "instance_group" {
     }
     boot_disk {
       initialize_params {
-        image_id = data.yandex_compute_image.ubuntu.id
+        image_id = var.disk_image == null ? data.yandex_compute_image.ubuntu.id : var.disk_image
         type     = var.disk_type
         size     = var.disk_size
       }
