@@ -1,5 +1,5 @@
 output "instance_id" {
-  value=yandex_compute_instance.server.*.fqdn
+  value=yandex_compute_instance.server.*.id
 }
 output "instance_name" {
   value=yandex_compute_instance.server.*.fqdn
