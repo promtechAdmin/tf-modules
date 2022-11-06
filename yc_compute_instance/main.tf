@@ -92,7 +92,7 @@ resource "yandex_compute_instance" "server" {
   }
   lifecycle {
     create_before_destroy = true
-    //    ignore_changes = [boot_disk[0].initialize_params[0].image_id]
+    ignore_changes = [boot_disk[0].initialize_params[0].image_id]
   }
   allow_stopping_for_update = true
 }
