@@ -70,7 +70,9 @@ resource "yandex_compute_instance" "server" {
     security_group_ids = var.security_group_ids
     ipv6               = false
   }
-
+  scheduling_policy {
+    preemptible = var.is_preemptible
+  }
   metadata = {
     user-data          = var.user_data
     serial-port-enable = 1

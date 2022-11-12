@@ -142,3 +142,7 @@ variable "instance_init_script" {
 }
 
 variable "user_data" {}
+variable "is_preemptible" {
+  type    = bool
+  default = false
+}
