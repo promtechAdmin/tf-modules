@@ -1,4 +1,12 @@
+terraform {
+  required_version = ">= 0.8"
 
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+}
 locals {
   labels = merge(var.labels, { name = "${var.env}_${var.instance_name}" })
 }
