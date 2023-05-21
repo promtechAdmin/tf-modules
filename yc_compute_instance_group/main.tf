@@ -87,6 +87,7 @@ resource "yandex_compute_instance_group" "instance_group" {
   }
   load_balancer {
     target_group_name = "${var.env}-${var.instance_name}-load-balancer"
+    traffic_timeout=0
   }
 
   dynamic "scale_policy" {
